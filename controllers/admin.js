@@ -7,10 +7,17 @@ module.exports.GET_Add_Product = (req, res, next) => {
 };
 
 module.exports.POST_Add_Product = (req, res, next) => {
-    const product = new Product(req.body.title, req.body.description, req.body.image_link, req.body.price, req.user._id);
-    product.save(() => {
+    const product = new Product({
+        title : req.body.title,
+        price : req.body.price, 
+        description : req.body.description, 
+        image_link : req.body.image_link
+    });
+    product.save().then(() => {
         console.log('Product saved successfully');
         res.redirect('/admin/products');
+    }).catch((err) => {
+        console.log(err);
     });
 };
 

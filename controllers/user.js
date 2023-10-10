@@ -1,9 +1,9 @@
 const Product = require("../models/product");
 
 module.exports.GET_Home = (req,res,next) => {
-    Product.fetchAll((products) => {
+    Product.find().then((products) => {
         res.render('user/home', {PageTitle : 'Home', products: products});
-    });
+    })
 };
 module.exports.GET_Shop = (req,res,next) => {
     res.render('user/shop', {PageTitle : 'Shop'});
@@ -20,7 +20,7 @@ module.exports.GET_Orders = (req,res,next) => {
 };
 module.exports.GET_Product_Details = (req,res,next) => {
     const productId = req.query.id;
-    Product.fetchById(productId, (product) => {
+    Product.findById(productId).then((product) => {
         res.render('user/product-details', {PageTitle : 'Details', product: product});
     });
 };
