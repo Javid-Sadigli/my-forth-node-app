@@ -1,6 +1,7 @@
 # My fourth node application
 
 For starting the server, type the following command : 
+* npm install
 * npm start
 
 If you want to see and make some changes on products, go to /admin/products.

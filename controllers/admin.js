@@ -11,7 +11,8 @@ module.exports.POST_Add_Product = (req, res, next) => {
         title : req.body.title,
         price : req.body.price, 
         description : req.body.description, 
-        image_link : req.body.image_link
+        image_link : req.body.image_link,
+        userId : req.user._id
     });
     product.save().then(() => {
         console.log('Product saved successfully');
@@ -22,31 +23,35 @@ module.exports.POST_Add_Product = (req, res, next) => {
 };
 
 module.exports.GET_Products = (req, res, next) => {
-    Product.fetchAll((products) => {
+    Product.find().then((products) => {
         res.render('admin/products', {PageTitle : 'Products', products: products});
     });
 };
 module.exports.POST_Delete_Product = (req, res, next) => {
     const productId = req.body.productId;
-    Product.deleteById(productId, () => {
+    Product.findByIdAndRemove(productId).then(() => {
         res.redirect('/admin/products');
+    }).catch((err) => {
+        console.log(err);
     });
 };
 module.exports.GET_Edit_Product = (req, res, next) => {
     const productId = req.query.id;
-    Product.fetchById(productId, (product) => {
+    Product.findById(productId).then((product) => {
         res.render('admin/edit-product', {PageTitle : 'Edit Product', product: product});
     });
 };
 module.exports.POST_Edit_Product = (req, res, next) => {
-    Product.editById(
-        req.body.id,
-        req.body.title, 
-        req.body.description,
-        req.body.image_link,
-        req.body.price,
-        () => {
-            res.redirect('/admin/products');
-        }
-    );
+    Product.findById(req.body.id).then((product) => {
+        product.title = req.body.title;
+        product.price = req.body.price;
+        product.description = req.body.description;
+        product.image_link = req.body.image_link;
+        return product.save();
+    }).then(() => {
+        console.log("Product updated successfully");
+        res.redirect('/admin/products');
+    }).catch((err) => {
+        console.log(err);
+    });
 };

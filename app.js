@@ -12,19 +12,19 @@ const UserRouter = require('./routes/user');
 const AdminRouter = require('./routes/admin');
 const ErrorController = require('./controllers/error');
 const ConsoleController = require('./controllers/console');
-// const User = require('./models/user');
+const User = require('./models/user');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(BodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(mainRoot, 'public')));
-// app.use((req, res, next) => {
-//     User.fetchById('650ef9ebe19822e7321926ea', (user) => {
-//         req.user = new User(user.username, user.email, user.password, user._id);
-//         next();
-//     });
-// });
+app.use((req, res, next) => {
+    User.findById('65318a141c3d30db0cbf80ca').then((user) => {
+        req.user = user;
+        next();
+    });
+});
 app.use(ConsoleController.LOG_Request);
 
 app.use('/', UserRouter);
