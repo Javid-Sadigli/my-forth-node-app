@@ -26,7 +26,7 @@ module.exports.GET_Product_Details = (req,res,next) => {
 };
 module.exports.POST_Add_To_Card = (req, res, next) => {
     const productId = req.params.productId;
-    Product.fetchById(productId, (product) => {
+    Product.findById(productId).then((product) => {
         req.user.addToCard(product, () => {
             res.redirect('/card');
         });
