@@ -18,29 +18,18 @@ const userSchema = new Schema({
         required : true
     },
     card : {
-        products : [
-            //     {
-            //     title : {
-            //         type : String,
-            //         required : true
-            //     },
-            //     price : {
-            //         type : Number, 
-            //         required : true
-            //     }, 
-            //     description : {
-            //         type : String, 
-            //     }, 
-            //     image_link : {
-            //         type : String, 
-            //         required : true
-            //     }
-            // }
-        ],
+        products : {
+            type : Array, 
+            default : []
+        },
         totalPrice : {
             type : Number, 
             default : 0
         }
+    }, 
+    orders : {
+        type : Array, 
+        default : []
     }
 });
 
@@ -67,9 +56,55 @@ userSchema.methods.addToCard = function(product, CALLBACK_FUNCTION)
         console.log(err);
     });
 };
+
 userSchema.methods.getCard = function(CALLBACK_FUNCTION)
 {
     CALLBACK_FUNCTION(this.card);
 };
+
+userSchema.methods.deleteFromCard = function(productId,CALLBACK_FUNCTION)
+{
+    const deleting_product_index = this.card.products.findIndex(product => product._id.toString() == productId.toString());
+    const deleting_product = this.card.products[deleting_product_index];
+
+    this.card.products.splice(deleting_product_index, 1);
+
+    this.card.totalPrice = parseFloat(this.card.totalPrice) - (parseFloat(deleting_product.price) * parseFloat(deleting_product.amount));
+
+    this.save().then(() => {
+        CALLBACK_FUNCTION();
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
+userSchema.methods._empty_card = function(CALLBACK_FUNCTION)
+{
+    this.card = {
+        totalPrice : 0,
+        products : []
+    };
+    this.save().then(() => {
+        CALLBACK_FUNCTION();
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
+userSchema.methods.addToOrders = function(CALLBACK_FUNCTION)
+{
+    this.getCard((card) => {
+        this.orders.push(card);
+        this.save().then(() => {
+            this._empty_card(CALLBACK_FUNCTION);
+        });
+    });
+};
+
+userSchema.methods.getOrders = function(CALLBACK_FUNCTION)
+{
+    CALLBACK_FUNCTION(this.orders);
+};
+
 
 module.exports = mongoose.model('User', userSchema);

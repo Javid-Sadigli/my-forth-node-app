@@ -41,7 +41,7 @@ module.exports.POST_Delete_From_Card = (req, res, next) => {
 module.exports.POST_Add_To_Order = (req, res, next) => {
     req.user.addToOrders(() => {
         res.redirect('/orders');
-    })
+    });
 };
 
  
