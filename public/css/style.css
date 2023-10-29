@@ -32,12 +32,18 @@ h1{
     justify-content: center;
     align-items: center;
 }
+.main-header{
+    display: flex;
+    justify-content:center;
+    gap: 70px;
+    align-items: center;
+}
 .header-nav{
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: lightcoral;
-    width: 100%;
+    width: 70%;
     height: 50px;
     border-radius: 10px;
 }
@@ -64,4 +70,20 @@ h1{
     color: lightcoral;
     background-color: white;
     font-weight: 500;
+}
+.login-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-a{
+    color: lightcoral;
+    transition: all 0.15s ease-in;
+}
+.login-a:hover{
+    font-weight: 700;
+}
+.logo{
+    color: lightcoral;
+    font-size: 24px;
 }

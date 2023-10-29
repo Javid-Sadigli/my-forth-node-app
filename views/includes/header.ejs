@@ -1,10 +1,20 @@
-<header>
+<header class="main-header">
+    <div class="header-logo-div">
+        <h1 class="logo">
+            JavidShop
+        </h1>
+    </div>
     <nav class="header-nav">
         <ul class="header-container">
             <li><a href="/" class="<% if (PageTitle == 'Home') { %>header-link-active<% }else{ %>header-link<% } %>">Home</a></li>
             <li><a href="/shop" class="<% if (PageTitle == 'Shop') { %>header-link-active<% }else{ %>header-link<% } %>">Shop</a></li>
             <li><a href="/card" class="<% if (PageTitle == 'Card') { %>header-link-active<% }else{ %>header-link<% } %>">Card</a></li>
             <li><a href="/orders" class="<% if (PageTitle == 'Orders') { %>header-link-active<% }else{ %>header-link<% } %>">Orders</a></li>
+        </ul>
+    </nav>
+    <nav class="login-nav">
+        <ul class="login-ul">
+            <li><a href="/login" class="login-a">Login</a></li>
         </ul>
     </nav>
 </header>

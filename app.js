@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 
 const UserRouter = require('./routes/user');
 const AdminRouter = require('./routes/admin');
+const AuthRouter = require('./routes/auth');
 const ErrorController = require('./controllers/error');
 const ConsoleController = require('./controllers/console');
 const User = require('./models/user');
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 app.use(ConsoleController.LOG_Request);
 
 app.use('/', UserRouter);
+app.use('/', AuthRouter);
 app.use('/admin', AdminRouter);
 app.use(ConsoleController.LOG_Not_Found);
 app.use(ErrorController.SEND_ERROR);
