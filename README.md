@@ -1,6 +1,6 @@
 # My fourth node application
 
-For starting the server, type the following command : 
+For starting the server, type the following commands : 
 * npm install
 * npm start
 
