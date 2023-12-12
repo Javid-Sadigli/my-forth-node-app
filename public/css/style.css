@@ -87,3 +87,9 @@ h1{
     color: lightcoral;
     font-size: 24px;
 }
+.login-ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}

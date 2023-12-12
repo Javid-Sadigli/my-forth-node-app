@@ -24,11 +24,13 @@
                             <%= product.price %> azn
                         </h1>
                     </div>
-                    <form class="product-button-div" method="post" action="/add-to-card/<%= product._id %>">
-                        <button class="product-button" type="submit">
-                            Add to card
-                        </button>
-                    </form>
+                    <% if (logged_in) { %>
+                        <form class="product-button-div" method="post" action="/add-to-card/<%= product._id %>">
+                            <button class="product-button" type="submit">
+                                Add to card
+                            </button>
+                        </form>
+                    <% } %>
                 </div>
                 <div class="product-image-div">
                     <div class="product-image">

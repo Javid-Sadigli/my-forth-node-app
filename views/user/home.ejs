@@ -24,7 +24,9 @@
                         </div>
                         <form class="product-buttons" method="post" action="/add-to-card/<%= product._id %>">
                             <a href="/product-details?id=<%= product._id %>" class="product-a">Details</a>
-                            <button type="submit" class="product-button">Add to Card</button>
+                            <% if (logged_in) { %>
+                                <button type="submit" class="product-button">Add to Card</button>
+                            <% } %>
                         </form>
                     </div>
                 <% } %>

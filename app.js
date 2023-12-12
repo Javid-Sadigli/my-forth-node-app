@@ -29,16 +29,11 @@ const store = new mongodb_store_sesion({
 app.use(BodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(mainRoot, 'public')));
 app.use(session({secret : 'mysecret', resave: false, saveUninitialized : false, store : store}));
-app.use((req, res, next) => {
-    User.findById('65318a141c3d30db0cbf80ca').then((user) => {
-        req.user = user;
-        next();
-    });
-});
+
 app.use(ConsoleController.LOG_Request);
 
-app.use('/', UserRouter);
 app.use('/', AuthRouter);
+app.use('/', UserRouter);
 app.use('/admin', AdminRouter);
 app.use(ConsoleController.LOG_Not_Found);
 app.use(ErrorController.SEND_ERROR);
