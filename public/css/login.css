@@ -9,7 +9,7 @@
 .login-form{
     border: 2px solid lightcoral;
     width: 600px;
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -24,10 +24,12 @@
     display: flex;
     width: 90%;
     align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 .login-input{
     height: 20px;
-    width: 400px;
+    width: 350px;
 }
 .login-submit-button{
     width: 500px;

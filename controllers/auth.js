@@ -65,3 +65,14 @@ module.exports.GET_Log_Out = (req, res, next) => {
         }
     });
 };
+
+module.exports.GET_Register = (req, res, next) => {
+    if(!req.logged_in)
+    {
+        res.render("auth/register", {PageTitle : "Register", logged_in: req.logged_in});
+    }
+    else
+    {
+        next();
+    }
+};

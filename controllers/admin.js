@@ -3,7 +3,7 @@ const ConsoleController = require('./console');
 const Product = require("../models/product");
 
 module.exports.GET_Add_Product = (req, res, next) => {
-    res.render('admin/add-product', {PageTitle : 'Add Product'});
+    res.render('admin/add-product', {PageTitle : 'Add Product', logged_in : req.logged_in, user : req.user});
 };
 
 module.exports.POST_Add_Product = (req, res, next) => {
@@ -24,7 +24,7 @@ module.exports.POST_Add_Product = (req, res, next) => {
 
 module.exports.GET_Products = (req, res, next) => {
     Product.find().then((products) => {
-        res.render('admin/products', {PageTitle : 'Products', products: products});
+        res.render('admin/products', {PageTitle : 'Products', products: products, logged_in : req.logged_in, user : req.user});
     });
 };
 module.exports.POST_Delete_Product = (req, res, next) => {
@@ -38,7 +38,7 @@ module.exports.POST_Delete_Product = (req, res, next) => {
 module.exports.GET_Edit_Product = (req, res, next) => {
     const productId = req.query.id;
     Product.findById(productId).then((product) => {
-        res.render('admin/edit-product', {PageTitle : 'Edit Product', product: product});
+        res.render('admin/edit-product', {PageTitle : 'Edit Product', product: product, logged_in : req.logged_in, user : req.user});
     });
 };
 module.exports.POST_Edit_Product = (req, res, next) => {
