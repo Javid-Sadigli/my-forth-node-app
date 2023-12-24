@@ -4,12 +4,22 @@
 .login-section{
     display: flex;
     justify-content: center;
-
 }
 .login-form{
     border: 2px solid lightcoral;
     width: 600px;
-    height: 350px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0px 0px 30px lightcoral;
+}
+.register-form{
+    border: 2px solid lightcoral;
+    width: 600px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
