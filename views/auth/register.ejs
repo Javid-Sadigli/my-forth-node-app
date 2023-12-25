@@ -8,6 +8,7 @@
     <main class="main">
         <section class="login-section">
             <form action="/register" method="post" class="register-form">
+                <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                 <div class="input-container">
                     <p class="login-p">Email : </p> <input type="text" name="email" class="login-input">
                 </div>

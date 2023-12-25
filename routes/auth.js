@@ -3,8 +3,6 @@ const ROUTER = express.Router();
 
 const AuthController = require('../controllers/auth');
 
-ROUTER.use(AuthController.CHECK_Logged_In);
-
 ROUTER.get('/login', AuthController.GET_Login);
 ROUTER.get('/logout', AuthController.GET_Log_Out);
 ROUTER.get('/register', AuthController.GET_Register);

@@ -23,6 +23,7 @@
                             </div>
                         </div>
                         <form class="product-buttons" method="post" action="/delete-from-card/<%= product._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                             <a href="/product-details?id=<%= product._id %>" class="product-a">Details</a>
                             <button type="submit" class="product-delete-button">Delete</button>
                         </form>
@@ -35,6 +36,7 @@
         </section>
         <section class="total-price-section">
             <form class="total-price-form" method="post" action="/add-to-order">
+                <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                 <div class="total-price-h1-div">
                     <h1 class="total-price-h1">
                         Total Price : <%= totalPrice %> azn

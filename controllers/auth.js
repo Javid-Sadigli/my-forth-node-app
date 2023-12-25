@@ -2,36 +2,10 @@ const bcrypt = require("bcryptjs");
 
 const User = require('../models/user');
 
-
-module.exports.CHECK_Logged_In = (req, res, next) => {
-    if(req.session.user)
-    {
-        User.findById(req.session.user._id).then((user) => {
-            if(user)
-            {
-                req.user = user;
-                req.logged_in = true; 
-                next();
-            }
-            else
-            {
-                next();
-            }
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
-    else
-    {
-        req.logged_in = false;
-        next();
-    }
-};
-
 module.exports.GET_Login = (req, res, next) => {
     if(!req.logged_in)
     {
-        res.render('auth/login', {PageTitle : 'Login', logged_in : req.logged_in, user : req.user});
+        res.render('auth/login', {PageTitle : 'Login'});
     }
     else
     {
@@ -84,7 +58,7 @@ module.exports.GET_Log_Out = (req, res, next) => {
 module.exports.GET_Register = (req, res, next) => {
     if(!req.logged_in)
     {
-        res.render("auth/register", {PageTitle : "Register", logged_in: req.logged_in});
+        res.render("auth/register", {PageTitle : "Register"});
     }
     else
     {
