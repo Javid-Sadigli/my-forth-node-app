@@ -15,6 +15,13 @@
                 <div class="input-container">
                     <p class="login-p">Password : </p> <input type="text" name="password" class="login-input">
                 </div>
+                <% if (error_message) { %>
+                    <div class="error-container">
+                        <p class="error_message">
+                            <%= error_message %>
+                        </p>
+                    </div>
+                <% } %>
                 <div class="button-container">
                     <button type="submit" class="login-submit-button">Login</button>
                 </div>

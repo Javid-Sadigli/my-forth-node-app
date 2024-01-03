@@ -5,7 +5,7 @@ const User = require('../models/user');
 module.exports.GET_Login = (req, res, next) => {
     if(!req.logged_in)
     {
-        res.render('auth/login', {PageTitle : 'Login'});
+        res.render('auth/login', {PageTitle : 'Login', error_message: req.flash('error')[0]});
     }
     else
     {
@@ -16,6 +16,7 @@ module.exports.POST_Login = (req, res, next) => {
     const email = req.body.email; 
     const password = req.body.password;
     let sessionUser;
+    let response_sent = false;
     User.findOne({
         email : email
     }).then((user) => {
@@ -26,6 +27,8 @@ module.exports.POST_Login = (req, res, next) => {
         }
         else
         {
+            req.flash('error', 'Invalid email or password!');
+            response_sent = true; 
             res.redirect("/login");
         }
     }).then((isMatching) => {
@@ -34,8 +37,9 @@ module.exports.POST_Login = (req, res, next) => {
             req.session.user = sessionUser;
             res.redirect('/');
         }
-        else
+        else if(!response_sent)
         {
+            req.flash('error', 'Invalid email or password!');
             res.redirect('/login');
         }
     }).catch((err) => {
@@ -58,7 +62,7 @@ module.exports.GET_Log_Out = (req, res, next) => {
 module.exports.GET_Register = (req, res, next) => {
     if(!req.logged_in)
     {
-        res.render("auth/register", {PageTitle : "Register"});
+        res.render("auth/register", {PageTitle : "Register", error_message : req.flash('error')[0]});
     }
     else
     {
@@ -77,6 +81,7 @@ module.exports.POST_Register = (req, res, next) => {
         User.findOne({email: email}).then((user) => {
             if(user)
             {
+                req.flash('error', 'We have a user with this email. Try another one!'); 
                 res.redirect('/register');
             }
             else
@@ -104,6 +109,7 @@ module.exports.POST_Register = (req, res, next) => {
     }
     else
     {
+        req.flash('error', 'Your passwords doesn\'t match!');
         res.redirect('/register');
     }
 };

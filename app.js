@@ -11,6 +11,7 @@ const session = require('express-session');
 const mongodb_store_sesion = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const csrf = require("csurf");
+const flash = require('connect-flash');
 
 const UserRouter = require('./routes/user');
 const AdminRouter = require('./routes/admin');
@@ -33,6 +34,7 @@ app.use(BodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(mainRoot, 'public')));
 app.use(session({secret : 'mysecret', resave: false, saveUninitialized : false, store : store}));
 app.use(csrfProtection);
+app.use(flash());
 
 app.use(ConsoleController.LOG_Request);
 app.use(MainController.CHECK_Logged_In);

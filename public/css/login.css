@@ -19,7 +19,7 @@
 .register-form{
     border: 2px solid lightcoral;
     width: 600px;
-    height: 400px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -57,4 +57,10 @@
     background-color: lightcoral;
     color: white;
     font-weight: 500;
+}
+.error_message{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: red;
+    text-align: center;
 }
