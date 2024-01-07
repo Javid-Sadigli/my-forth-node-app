@@ -1,11 +1,12 @@
 const bcrypt = require("bcryptjs");
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const SendGridTransport = require('nodemailer-sendgrid-transport');
 
 const User = require('../models/user');
 
 const transporter = nodemailer.createTransport(SendGridTransport({auth : {
-    api_key : 'SG.dsC9bD9LQ_mKltzttyJFKQ.eYt8EQPK-jmsTPy0qj5QDdYY_ZsnKQ_t6wYW_Krv0Yo' 
+    api_key : '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' 
 }}));
 
 module.exports.GET_Login = (req, res, next) => {
@@ -113,7 +114,7 @@ module.exports.POST_Register = (req, res, next) => {
                     from : 'duaedenspiderman@gmail.com', 
                     subject : 'Successfully registered.', 
                     html : '<h1>Successfully registered</h1>'
-                })
+                });
             }
         }).catch((err) => {
             console.log(err);
@@ -123,5 +124,61 @@ module.exports.POST_Register = (req, res, next) => {
     {
         req.flash('error', 'Your passwords doesn\'t match!');
         res.redirect('/register');
+    }
+};
+
+module.exports.GET_Reset = (req, res, next) => {
+    res.render('auth/reset', {PageTitle : 'Reset Password', error_message : req.flash('error')[0]});
+};
+module.exports.POST_Reset = (req, res, next) => {
+    const email = req.body.email;
+    let response_sent = false;
+    crypto.randomBytes(32, (err, buffer) => {
+        if(err)
+        {
+            console.log(err);
+            response_sent = true;
+            res.redirect('/reset');
+        }
+        else
+        {
+            const token = buffer.toString('hex');
+            User.findOne({email : email}).then((user) => {
+                if(!user)
+                {
+                    req.flash('error', 'User not found! Enter a valid email address!');
+                    response_sent = true;
+                    res.redirect('/reset');
+                }
+                else
+                {
+                    user.setResetToken(token, () => {
+                        req.flash('email', email);
+                        res.redirect('/reset/info');
+                        transporter.sendMail({
+                            to : email, 
+                            from : 'duaedenspiderman@gmail.com', 
+                            subject : 'Reset your password.', 
+                            html : `
+                                <p> Please go to the following link to reset your password. </p>
+                                <a href="http://localhost:3000/reset/token/${token}">Link</a>
+                        `});
+
+                    });
+                }
+            });
+        }
+    });
+};
+
+module.exports.GET_Reset_Info = (req, res, next) => {
+    const email = req.flash('email')[0];
+    if(email)
+    {
+        res.render('auth/resetInfo', {PageTitle : 'Info', email : email});
+    }
+    else
+    {
+        next();
     }
 };

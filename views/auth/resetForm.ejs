@@ -7,13 +7,13 @@
 
     <main class="main">
         <section class="login-section">
-            <form action="/login" method="post" class="login-form">
+            <form action="/#" method="post" class="reset-password-form">
                 <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                 <div class="input-container">
-                    <p class="login-p">Email : </p> <input type="text" name="email" class="login-input">
+                    <p class="login-p">Password : </p> <input type="text" name="password" class="login-input">
                 </div>
                 <div class="input-container">
-                    <p class="login-p">Password : </p> <input type="text" name="password" class="login-input">
+                    <p class="login-p">Confirm password : </p> <input type="text" name="confirm_password" class="login-input">
                 </div>
                 <% if (error_message) { %>
                     <div class="error-container">
@@ -23,12 +23,7 @@
                     </div>
                 <% } %>
                 <div class="button-container">
-                    <button type="submit" class="login-submit-button">Login</button>
-                </div>
-                <div class="reset-container">
-                    <a href="/reset" class="reset-a">
-                        Forgot your password?
-                    </a>
+                    <button type="submit" class="login-submit-button">Sign Up</button>
                 </div>
             </form>
         </section>

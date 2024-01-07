@@ -27,6 +27,17 @@
     border-radius: 8px;
     box-shadow: 0px 0px 30px lightcoral;
 }
+.reset-form{
+    border: 2px solid lightcoral;
+    width: 600px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0px 0px 30px lightcoral;
+}
 .login-p{
     width: 150px;
 }
@@ -62,5 +73,22 @@
     margin-top: 0px;
     margin-bottom: 0px;
     color: red;
+    text-align: center;
+}
+.reset-a{
+    color: lightcoral;
+    transition: all 0.15s ease-in;
+}
+.reset-a:hover{
+    font-weight: 700;
+}
+.resetInfo-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.resetInfo-p, 
+.resetInfo-h1{
     text-align: center;
 }

@@ -30,6 +30,10 @@ const userSchema = new Schema({
     orders : {
         type : Array, 
         default : []
+    }, 
+    resetToken : {
+        token : String,
+        expirationDate : Date
     }
 });
 
@@ -104,6 +108,28 @@ userSchema.methods.addToOrders = function(CALLBACK_FUNCTION)
 userSchema.methods.getOrders = function(CALLBACK_FUNCTION)
 {
     CALLBACK_FUNCTION(this.orders);
+};
+
+userSchema.methods.setResetToken = function(token, CALLBACK_FUNCTION)
+{
+    this.resetToken = {
+        token : token, 
+        expirationDate : Date.now() + 3600000
+    }; 
+    this.save().then(() => {
+        CALLBACK_FUNCTION();
+    });
+};
+
+userSchema.methods.emptyResetToken = function(CALLBACK_FUNCTION)
+{
+    this.resetToken = {
+        token : undefined, 
+        expirationDate : undefined
+    };
+    this.save().then(() => {
+        CALLBACK_FUNCTION();
+    });
 };
 
 
