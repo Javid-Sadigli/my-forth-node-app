@@ -21,7 +21,6 @@ const ConsoleController = require('./controllers/console');
 const MainController = require('./controllers/main');
 const User = require('./models/user');
 
-
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 

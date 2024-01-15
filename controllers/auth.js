@@ -6,7 +6,7 @@ const SendGridTransport = require('nodemailer-sendgrid-transport');
 const User = require('../models/user');
 
 const transporter = nodemailer.createTransport(SendGridTransport({auth : {
-    api_key : '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' 
+    api_key : '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' 
 }}));
 
 module.exports.GET_Login = (req, res, next) => {
@@ -161,11 +161,13 @@ module.exports.POST_Reset = (req, res, next) => {
                             subject : 'Reset your password.', 
                             html : `
                                 <p> Please go to the following link to reset your password. </p>
-                                <a href="http://localhost:3000/reset/token/${token}">Link</a>
+                                <a href="http://localhost:3000/reset/token/${token}">Click here</a>
                         `});
 
                     });
                 }
+            }).catch((err) => {
+                console.log(err);
             });
         }
     });
@@ -181,4 +183,64 @@ module.exports.GET_Reset_Info = (req, res, next) => {
     {
         next();
     }
+};
+
+module.exports.GET_Reset_Token = (req, res, next) => {
+    const token = req.params.reset_token; 
+    let response_sent = false;
+    User.findOne({
+        'resetToken.token' : token, 
+        'resetToken.expirationDate' : {$gt : Date.now()}
+    }).then((user) => {
+        if(user)
+        {
+            res.render('auth/resetForm', {PageTitle : 'Reset Password', error_message : req.flash('error')[0], user_id : user._id});
+        }
+        else
+        {
+            response_sent = true;
+            next();
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
+module.exports.POST_Reset_Password = (req, res, next) => {
+    const password = req.body.password;
+    const confirm_password = req.body.confirm_password;
+    const user_id = req.body.user_id;
+    let response_sent = false;
+    let resetUser;
+
+    User.findOne({
+        _id : user_id, 
+        'resetToken.expirationDate' : {$gt : Date.now()}
+    }).then((user) => {
+        if(password == confirm_password)
+        {
+            resetUser = user;
+            return bcrypt.hash(password, 12);
+        }
+        else
+        {
+            req.flash('error', 'Your passwords doesn\'t match!'); 
+            response_sent = true;
+            res.redirect(`/reset/token/${user.resetToken.token}`);
+        }
+    }).then((hashed_password) => {
+        if(hashed_password)
+        {
+            resetUser.password = hashed_password;
+            resetUser.resetToken = undefined;
+            return resetUser.save();
+        }
+    }).then(() => {
+        if(!response_sent)
+        {
+            res.redirect('/login');
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
 };

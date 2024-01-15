@@ -7,8 +7,9 @@
 
     <main class="main">
         <section class="login-section">
-            <form action="/#" method="post" class="reset-password-form">
+            <form action="/reset_password" method="post" class="reset-password-form">
                 <input type="hidden" name="_csrf" value="<%= csrf_token %>">
+                <input type="hidden" name="user_id" value="<%= user_id %>">
                 <div class="input-container">
                     <p class="login-p">Password : </p> <input type="text" name="password" class="login-input">
                 </div>
@@ -23,7 +24,7 @@
                     </div>
                 <% } %>
                 <div class="button-container">
-                    <button type="submit" class="login-submit-button">Sign Up</button>
+                    <button type="submit" class="login-submit-button">Change Password</button>
                 </div>
             </form>
         </section>
